@@ -12,6 +12,10 @@ void actualizarPantalla();
 
 const int buttonPin1 = PA5;  // Pin del primer botón
 const int buttonPin2 = PA6;  // Pin del segundo botón
+const int Pin3 = PA1;        // Pin del led
+
+int valorPotenciometro;
+int voltajeEnviar; //porcentaje
 
 bool buttonState1 = false;
 bool buttonState2 = false;
@@ -27,6 +31,8 @@ void setup(){
   pinMode(buttonPin1, INPUT_PULLUP);    // Configura el primer botón como entrada con resistencia pull-up interna
   pinMode(buttonPin2, INPUT_PULLUP);    // Configura el segundo botón como entrada con resistencia pull-up interna
 
+  pinMode(Pin3, OUTPUT);                // Configura el Pin3 como salida
+
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Inicializa la pantalla OLED
   display.setTextColor(SSD1306_WHITE); // Configura el color del texto en blanco
   display.setTextSize(1); // Configura un tamaño de texto pequeño
@@ -35,14 +41,18 @@ void setup(){
 
 void loop(){
 
+  //AQUI SE LEE EL VALOR DEL POTENCIOMETRO
+  valorPotenciometro = analogRead(PA0);
+  voltajeEnviar = map(valorPotenciometro, 0, 1028, 0, 100);
+  analogWrite(Pin3, voltajeEnviar);
+
   display.clearDisplay();
-  display.print("23I");
+  display.setCursor(10, 10);
+  display.print("Voltaje: ");
+  display.print(valorPotenciometro);
+  display.display();
 
-    // Escribe el estado de los botones en la pantalla
-    display.setCursor(10, 10);
-
-    // Muestra el contenido en la pantalla OLED
-    display.display();
+  delay(1000);
 
   // Lee el estado de los botones
   newButtonState1= digitalRead(buttonPin1);
@@ -57,7 +67,6 @@ void loop(){
     actualizarPantalla();
   }
 
-  actualizarPantalla();
 }
 
 void actualizarPantalla() {
