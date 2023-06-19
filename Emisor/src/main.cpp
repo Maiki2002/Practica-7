@@ -1,18 +1,35 @@
-#include <Arduino.h>
+//Librerias necesarias para el manejo de la pantalla OLED
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
-// put function declarations here:
-int myFunction(int, int);
+//Configuración de la pantalla
+#define OLED_WIDTH 128
+#define OLED_HEIGHT 64
 
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+void actualizarPantalla();
+
+Adafruit_SSD1306 display(OLED_WIDTH, OLED_HEIGHT, &Wire, -1);
+
+void setup(){
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Inicializa la pantalla OLED
+  display.setTextColor(SSD1306_WHITE); // Configura el color del texto en blanco
+  display.setTextSize(1); // Configura un tamaño de texto pequeño
+  display.clearDisplay(); // Limpia la pantalla
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void loop(){
+  actualizarPantalla();
 }
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
+void actualizarPantalla() {
+  display.clearDisplay(); // Borra el contenido anterior en la pantalla
+
+  display.print("Esto es un test");
+
+  // Escribe el estado de los botones en la pantalla
+  display.setCursor(10, 10);
+
+  // Muestra el contenido en la pantalla OLED
+  display.display();
+} 
