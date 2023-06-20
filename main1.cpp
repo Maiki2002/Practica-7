@@ -20,8 +20,8 @@ void setup() {
   pinMode(buttonPin2, INPUT_PULLUP);  // Configura el segundo botón como entrada con resistencia pull-up interna
 
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Inicializa la pantalla OLED
-  display.setTextColor(SSD1306_WHITE); // 
-  display.setTextSize(1); // 
+  display.setTextColor(SSD1306_WHITE); // Configura el color del texto en blanco
+  display.setTextSize(1); // Configura un tamaño de texto pequeño
   display.clearDisplay(); // Limpia la pantalla
 }
 
@@ -39,7 +39,7 @@ void loop() {
     actualizarPantalla();
   }
 
-  delay(100); // 
+  delay(100); // Pequeña pausa para evitar lecturas rápidas y rebotes de botón
 }
 
 void actualizarPantalla() {
