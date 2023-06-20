@@ -1,14 +1,3 @@
-//Librerias necesarias para el manejo de la pantalla OLED
-#include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-
-//Librerias necesarias para el envio por infrarojo
-#define USE_ONE_TIMER_FOR_IRMP_AND_IRSND
-#include <IRMP.h>
-#include <IRMPconfig.h>
-#include <irsnd.hpp>
-
 //Configuración de la pantalla
 #define OLED_WIDTH 128
 #define OLED_HEIGHT 64
@@ -20,17 +9,25 @@
 #define IRSND_PROTOCOL_NAMES        1
 #define IRSND_OUTPUT_PIN            PA7            //Pin por donde mandare la señal de salida
 
-void actualizarPantalla();
+//Librerias necesarias para el manejo de la pantalla OLED
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+//Librerias necesarias para el envio por infrarojo
+#include <irsndSelectMain15Protocols.h>
+#include <irsnd.hpp>
+
+//Declaracion de funciones auxiliares
 void mandarValor();
 void conmutar();
-
 
 const int buttonPin1 = PA5;  // Pin del primer botón
 const int buttonPin2 = PA6;  // Pin del segundo botón
 const int Pin3 = PA1;        // Pin del led
 
 int valorPotenciometro;
-int voltajeEnviar; //porcentaje
+int voltajeEnviar;           // Voltaje en porcentaje
 int mode = 0;
 
 int porcentaje;
@@ -41,7 +38,6 @@ bool buttonState2 = false;
 
 bool newButtonState1;
 bool newButtonState2;
-
 
 Adafruit_SSD1306 display(OLED_WIDTH, OLED_HEIGHT, &Wire, -1);
 
@@ -207,33 +203,3 @@ void conmutar(){
 
   delay(1000);
 }
-
-/* void actualizarPantalla() {
-
-  if(newButtonState1){
-    display.clearDisplay(); // Borra el contenido anterior en la pantalla
-
-    display.print("Boton 1 presionado");
-
-    // Escribe el estado de los botones en la pantalla
-    display.setCursor(10, 10);
-
-    // Muestra el contenido en la pantalla OLED
-    display.display();
-    delay(100);
-  }else if(newButtonState2){
-    display.clearDisplay(); // Borra el contenido anterior en la pantalla
-
-    display.print("Boton 2 presionado");
-
-    // Escribe el estado de los botones en la pantalla
-    display.setCursor(10, 10);
-
-    // Muestra el contenido en la pantalla OLED
-    display.display();
-
-    delay(100);
-  }
-
-  
-}  */
