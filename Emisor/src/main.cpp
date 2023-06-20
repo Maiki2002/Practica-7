@@ -45,6 +45,11 @@ IRMP_DATA irsnd_data;
 
 void setup(){
 
+  //ENVIO DEL VALOR
+  irsnd_data.protocol = IRSND_SUPPORT_NEC_PROTOCOL;    // Protocolo utilizado
+  irsnd_data.address = 0x02;                         // Dirección de la placa emisora
+  irsnd_data.flags = 0;
+
   irsnd_init();
 
   pinMode(buttonPin1, INPUT_PULLUP);    // Configura el primer botón como entrada con resistencia pull-up interna
@@ -140,12 +145,7 @@ void mandarValor(){
 
   if(newButtonState1){
     
-    //ENVIO DEL VALOR
-    irsnd_data.protocol = IRSND_SUPPORT_NEC_PROTOCOL;    // Protocolo utilizado
-    irsnd_data.address = 0x01;                           // Dirección de la placa emisora
-    irsnd_data.command = voltajeEnviar;                  // Valor que se enviara
-    irsnd_data.flags = 0;
-
+    irsnd_data.command = mode;
     irsnd_send_data(&irsnd_data, true);                 // Envio la data
   
     delay(100);                                       
