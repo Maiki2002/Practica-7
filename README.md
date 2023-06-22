@@ -59,13 +59,20 @@ En la pantalla OLED del receptor se muestra el voltaje recibido por el transmiso
 
 ## Funcionamiento (Receptor) 
    1. Se define la configuracion de la pantalla Oled y de los pines.
+
 <img width="491" alt="image" src="https://github.com/Maiki2002/Practica-7/assets/105370860/b83eb2dd-ac01-40bc-8aae-867fcda00cc8">
+
    2. Se incluyen todas las bibliotecas necesarias y se definen las variables globales.
+
 <img width="680" alt="image" src="https://github.com/Maiki2002/Practica-7/assets/105370860/160a75ca-2497-44b3-8ca4-f01997c07e8d">
+
    3. `Void setup()`: Se hace la configuración para mostrar en la pantalla oled, asi como la configuración de entrada para el receptor y la inicialización de esta.
+
 <img width="728" alt="image" src="https://github.com/Maiki2002/Practica-7/assets/105370860/c18000de-3a32-4998-a110-63d5422b2186">
+
    4. `Void loop()`: mediante la funcion `irmp_get_data` podemos saber si el receptor está recibiendo una señal infraroja, en caso de que cumpla la función, mostrará lo que está registrando. En caso contrario mostrará en el Oled que aún no está recibiendo la información. Cuando se esté recibiendo la señal infraroja se evaluará que stá recibiendo y dependiendo el valor hará una tarea específica de impresion en la oled.
 En el segundo if dependiendo su valor, realizará una escritura para el led conectado a la Blue Pill, si es 0 se apagará el led, si es uno enciende un 100% y si es algun otro valor, encenderá según lo recibido por el emisor.
+
 <img width="782" alt="image" src="https://github.com/Maiki2002/Practica-7/assets/105370860/abe0143f-d050-4e0d-89a1-0b64093a17b9">
 <img width="770" alt="image" src="https://github.com/Maiki2002/Practica-7/assets/105370860/23457227-a90e-45f5-ac5a-5ad1f86321a5">
 
