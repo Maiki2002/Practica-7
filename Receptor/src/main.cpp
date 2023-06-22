@@ -19,6 +19,7 @@
 namespace global{
     Adafruit_SSD1306* oled;
     int command;
+    IRMP_DATA irmp_data;
 }
 
 IRMP_DATA irmp_data;
@@ -38,13 +39,13 @@ void setup() {
 
 void loop() {
    
-  if (irmp_get_data(&irmp_data)) {
+  if (irmp_get_data(&(global::irmp_data))) {
     
     global::oled->clearDisplay();
     global::oled->setTextSize(2);
     global::oled->setCursor(0, 0);
     global::oled->print("INFO ");
-    global::oled->print(irmp_data.command);
+    global::oled->print(global::irmp_data.command);
     global::oled->display();
 
     delay(2000);
@@ -57,17 +58,7 @@ void loop() {
     global::oled->print("Esperando info");
     global::oled->display();
   }
-  
-  
-  /*display.clearDisplay();
-  display.setTextSize(2);
-  display.setCursor(0, 0);
-  display.clearDisplay();
-  display.println(command);
-  display.display();*/
 
   delay(1000); // Pequeña pausa para evitar lecturas rápidas y rebotes de botón
 }
-
-
 
