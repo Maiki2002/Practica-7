@@ -16,44 +16,46 @@
 #include <IRMPconfig.h>
 #include <IRMP.h>
 
-
-Adafruit_SSD1306 display(OLED_WIDTH, OLED_HEIGHT, &Wire, -1);
+namespace global{
+    Adafruit_SSD1306* oled;
+    int command;
+}
 
 IRMP_DATA irmp_data;
 
 void setup() {
-  Serial.begin(115200);
-  pinMode(IRMP_INPUT_PIN, INPUT);
-  irmp_init();
+    Serial.begin(115200);
+    pinMode(IRMP_INPUT_PIN, INPUT);
+    irmp_init();
 
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Inicializa la pantalla OLED
-  display.setTextColor(SSD1306_WHITE); // Configura el color del texto en blanco
-  display.setTextSize(1); // Configura un tamaño de texto pequeño
-  display.clearDisplay(); // Limpia la pantalla
+    global::oled = new Adafruit_SSD1306(OLED_WIDTH, OLED_HEIGHT, &Wire, -1);
+
+    global::oled->begin(SSD1306_SWITCHCAPVCC, 0x3C); // Inicializa la pantalla OLED
+    global::oled->setTextColor(SSD1306_WHITE); // Configura el color del texto en blanco
+    global::oled->setTextSize(1); // Configura un tamaño de texto pequeño
+    global::oled->clearDisplay(); // Limpia la pantalla
 }
 
 void loop() {
-  
-  int command;
    
   if (irmp_get_data(&irmp_data)) {
     
-    display.clearDisplay();
-    display.setTextSize(2);
-    display.setCursor(0, 0);
-    display.print("INFO ");
-    display.print(irmp_data.command);
-    display.display();
+    global::oled->clearDisplay();
+    global::oled->setTextSize(2);
+    global::oled->setCursor(0, 0);
+    global::oled->print("INFO ");
+    global::oled->print(irmp_data.command);
+    global::oled->display();
 
     delay(2000);
     
   
   }else{
-    display.clearDisplay();
-    display.setTextSize(2);
-    display.setCursor(0, 0);
-    display.print("Esperando info");
-    display.display();
+    global::oled->clearDisplay();
+    global::oled->setTextSize(2);
+    global::oled->setCursor(0, 0);
+    global::oled->print("Esperando info");
+    global::oled->display();
   }
   
   
@@ -66,5 +68,6 @@ void loop() {
 
   delay(1000); // Pequeña pausa para evitar lecturas rápidas y rebotes de botón
 }
+
 
 
