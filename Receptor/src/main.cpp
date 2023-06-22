@@ -15,89 +15,91 @@
 #include <IRMPconfig.h>
 #include <IRMP.h>
 
-Adafruit_SSD1306 display(OLED_WIDTH, OLED_HEIGHT, &Wire, -1);
+namespace global{
+    Adafruit_SSD1306* oled;
+    IRMP_DATA irmp_data;
+    int command;
+    float vcommand;
+}
 
 IRMP_DATA irmp_data;
 
 void setup() {
 
-  pinMode(IRMP_INPUT_PIN, INPUT);
-  irmp_init();
+    pinMode(IRMP_INPUT_PIN, INPUT);
+    irmp_init();
+    
+    global::oled = new Adafruit_SSD1306 (OLED_WIDTH, OLED_HEIGHT, &Wire, -1);
+    global::oled->begin(SSD1306_SWITCHCAPVCC, 0x3C);            // Inicializa la pantalla OLED
+    global::oled->setTextColor(SSD1306_WHITE);                  // Configura el color del texto en blanco
+    global::oled->setTextSize(1);                               // Configura un tamaño de texto pequeño
+    global::oled->clearDisplay();                               // Limpia la pantalla
 
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);            // Inicializa la pantalla OLED
-  display.setTextColor(SSD1306_WHITE);                  // Configura el color del texto en blanco
-  display.setTextSize(1);                               // Configura un tamaño de texto pequeño
-  display.clearDisplay();                               // Limpia la pantalla
-
-  analogWrite(PA1, LOW);
-}
+    analogWrite(PA1, LOW);
+    }
 
 void loop() {
-  
-  int command;
-  float vcommand;
    
-  if (irmp_get_data(&irmp_data)) {
+  if (irmp_get_data(&(global::irmp_data))) {
     
-    display.clearDisplay();
-    display.setTextSize(2);
-    display.setCursor(0, 0);
-    display.print("INFO ");
-    display.print(irmp_data.command);
-    display.display();
+    global::oled->clearDisplay();
+    global::oled->setTextSize(2);
+    global::oled->setCursor(0, 0);
+    global::oled->print("INFO ");
+    global::oled->print(global::irmp_data.command);
+    global::oled->display();
 
     switch(irmp_data.command){
       case 0:
-        display.clearDisplay();
-        display.setTextSize(2);
-        display.setCursor(0, 0);
-        display.print("MODO APAGADO");
-        display.display();
+        global::oled->clearDisplay();
+        global::oled->setTextSize(2);
+        global::oled->setCursor(0, 0);
+        global::oled->print("MODO APAGADO");
+        global::oled->display();
       break;
       case 1:
-        display.clearDisplay();
-        display.setTextSize(2);
-        display.setCursor(0, 0);
-        display.print("MODO ENCENDIDO");
-        display.display();
+        global::oled->clearDisplay();
+        global::oled->setTextSize(2);
+        global::oled->setCursor(0, 0);
+        global::oled->print("MODO ENCENDIDO");
+        global::oled->display();
       break;
       default: 
-        display.clearDisplay();
-        display.setTextSize(2);
-        display.setCursor(0, 0);
-        display.print("MODO ENCENDIDO Y REGULADO");
-        display.display();
+        global::oled->clearDisplay();
+        global::oled->setTextSize(2);
+        global::oled->setCursor(0, 0);
+        global::oled->print("MODO ENCENDIDO Y REGULADO");
+        global::oled->display();
       break;
     }
   
     delay(2000);
   }else{
-    display.clearDisplay();
-    display.setTextSize(2);
-    display.setCursor(0, 0);
-    display.print("Esperando info");
-    display.display();
+    global::oled->clearDisplay();
+    global::oled->setTextSize(2);
+    global::oled->setCursor(0, 0);
+    global::oled->print("Esperando info");
+    global::oled->display();
   }
 
-  if(irmp_data.command == 0){
+  if(global::irmp_data.command == 0){
     analogWrite(PA1, 0);
-  } else if(irmp_data.command == 1){
+  } else if(global::irmp_data.command == 1){
     analogWrite(PA1, 100);
   }else{
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.setCursor(0, 0);
-    display.print("\n");
-    display.print("Voltaje: ");
-    command = irmp_data.command;
-    vcommand = (irmp_data.command*3.3)/100;
-    display.print(vcommand,1);
-    display.display();
-    analogWrite(PA1, vcommand);
+    global::oled->clearDisplay();
+    global::oled->setTextSize(1);
+    global::oled->setCursor(0, 0);
+    global::oled->print("\n");
+    global::oled->print("Voltaje: ");
+    global::command = global::irmp_data.command;
+    global::vcommand = (global::irmp_data.command*3.3)/100;
+    global::oled->print(global::vcommand,1);
+    global::oled->display();
+    analogWrite(PA1, global::vcommand);
   }
 
-  display.clearDisplay();
+  global::oled->clearDisplay();
 
   delay(1000); // Pequeña pausa para evitar lecturas rápidas y rebotes de botón
 }
-
