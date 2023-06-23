@@ -67,6 +67,7 @@ En la pantalla OLED del receptor se muestra el voltaje recibido por el transmiso
 
 ## Esquema electrico (Transmisor)
 
+![Image text](https://res.cloudinary.com/dmyp0t903/image/upload/v1687489493/edq6imfqo9p7ze4rtg9y.png)
 
 ## Compilacion
 
