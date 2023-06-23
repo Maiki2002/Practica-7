@@ -1,4 +1,4 @@
-#Práctica
+# Práctica
 # Envio de señales infrarojas (STM32 Blue Pill) 
 
 En el proyecto se utiliza Arduino para poder codificar un transmisor y receptor a través de la comunicación infrarroja para controlar de forma remota la intensidad del LED.
