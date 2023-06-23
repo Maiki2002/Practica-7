@@ -7,4 +7,4 @@ Primero lee la entrada analógica de dos botones y un potenciómetro. Cuando pre
 
 En la pantalla OLED del receptor se muestra el voltaje recibido por el transmisor. Este voltaje debe estar entre 0 y 3.3 V.
 
-Dentro de este repositorio se encuentran las ramas Transmisor, Receptor y complement, con los cuales fueron áreas de trabajo.
+## Dentro de este repositorio se encuentran las ramas Emisor, Receptor y complement, con los cuales fueron áreas de trabajo.
