@@ -78,3 +78,18 @@ Para grabar el proyecto en el microcontrolador, basta con darle click en la flec
 
 ![Image text](https://res.cloudinary.com/dmyp0t903/image/upload/v1687447280/ya6dchxmhrnejgfg87ql.png)
 
+## Ejemplo
+
+Noten que MD te permite presentar código de manera profesional, usando una fuente monoespaciada y colores de resaltado de sintaxis.
+
+```C
+#include <stdio.h>
+
+int main()
+{
+   printf("Hello world\n");
+   return 0;
+}
+```
+
+
